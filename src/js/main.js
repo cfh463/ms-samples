@@ -57,6 +57,7 @@ jQuery(function($) {'use strict';
 	 
 	    //Init the carousel
 	    $("#main-slider").find('.owl-carousel').owlCarousel({
+	      autoPlay : false,
 	      slideSpeed : 500,
 	      paginationSpeed : 500,
 	      singleItem : true,
@@ -69,7 +70,7 @@ jQuery(function($) {'use strict';
 	      afterMove : moved,
 	      startDragging : pauseOnDragging,
 	      //autoHeight : true,
-	      transitionStyle : "fadeUp"
+	      transitionStyle : "fade"
 	    });
 	 
 	    //Init progressBar where elem is $("#owl-demo")

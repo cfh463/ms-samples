@@ -39,7 +39,7 @@ var metaUrl = function(config) {
         // parent folder name
         	// if (pattern.test(files[filepath])) {
         		console.log(filepath);
-	        	files[filepath]['url'] = filepath.replace("index.md","");
+	        	files[filepath]['url'] = "/" + filepath.replace("index.md","");
         	// }
     	});
         done();
@@ -61,7 +61,7 @@ Handlebars.registerHelper("debug", function(optionalValue) {
 var sitebuild = Metalsmith(__dirname)
 	.metadata({
 	    site: {
-	      title: 'Zebra Developer Community',
+	      title: 'Zebra Technologies - EMDK Samples',
 	      url: 'http://127.0.0.1:8080/'
 	    }
 	  })
@@ -74,36 +74,17 @@ var sitebuild = Metalsmith(__dirname)
 	  pattern: '**/*.md'
 	}))	
 	.use(collections({
-	    pages: {
-	        pattern: 'pages/**/*.md'
-	    },
-	    blogs: {
-	        pattern: 'blogs/**/*.md',
-	        sortBy: 'date',
-	        reverse: true
-	    },
-	    videos: {
-	        pattern: 'videos/**/*.md',
+	    samples: {
+	        pattern: 'samples/**/*.md',
 	        sortBy: 'date',
 	        reverse: true
 	    }
 
 	}))
-	.use(branch('blogs/**/*.md')
+	.use(branch('samples/**/*.md')
 		.use(tags({
-		    handle: 'tags',
-		    path:'blogs/category/:tag/index.html',
-		    layout: __dirname + '/layouts/list-category.html',
-		    sortBy: 'date',
-		    reverse: true,
-		    skipMetadata: false,
-		    slug: {mode: 'rfc3986'}
-		  }))
-	)
-	.use(branch('videos/**/*.md')
-		.use(tags({
-		    handle: 'tags',
-		    path:'videos/category/:tag/index.html',
+		    handle: 'product',
+		    path:'samples/product/:tag/index.html',
 		    layout: __dirname + '/layouts/list-category.html',
 		    sortBy: 'date',
 		    reverse: true,
@@ -112,8 +93,8 @@ var sitebuild = Metalsmith(__dirname)
 		  }))
 	)
     .use(findLayout({
-        pattern: 'blogs',
-        layoutName: 'page.html'
+        pattern: 'samples',
+        layoutName: 'sample.html'
     }))
     .use(markdown({
 	  smartypants: true,
