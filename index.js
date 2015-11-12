@@ -1,6 +1,7 @@
 var Metalsmith = require('metalsmith'),
     branch = require('metalsmith-branch'),
   	markdown   = require('metalsmith-markdown'),
+    snippet   = require('metalsmith-snippet'),
     templates  = require('metalsmith-templates')
     Handlebars = require('handlebars'),
     collections = require('metalsmith-collections'),
@@ -24,6 +25,39 @@ var findLayout = function(config) {
                 var _f = files[file];
                 if (!_f.layout) {
                     _f.layout = config.layoutName;
+                }
+            }
+        }
+        done();
+    };
+};
+
+var findProduct = function(config) {
+    var pattern = new RegExp(config.pattern);
+
+    return function(files, metalsmith, done) {
+        for (var file in files) {
+            if (pattern.test(file)) {
+                var _f = files[file];
+                if (!_f.product) {
+                    _f.product = config.productName;
+                }
+            }
+        }
+        done();
+    };
+};
+
+var findProductVersion = function(config) {
+    var pattern = new RegExp(config.pattern);
+
+    return function(files, metalsmith, done) {
+        for (var file in files) {
+            console.log(file);
+            if (pattern.test(file)) {
+                var _f = files[file];
+                if (!_f.productversion) {
+                    _f.productversion = config.productVersionName;
                 }
             }
         }
@@ -62,7 +96,7 @@ var sitebuild = Metalsmith(__dirname)
 	.metadata({
 	    site: {
 	      title: 'Zebra Technologies - EMDK Samples',
-	      url: 'http://127.0.0.1:8080/'
+	      url: 'http://zebratechnologies.github.io/samples'
 	    }
 	  })
 	.use(metaUrl({
@@ -81,27 +115,39 @@ var sitebuild = Metalsmith(__dirname)
 	    }
 
 	}))
-	.use(branch('samples/**/*.md')
-		.use(tags({
-		    handle: 'product',
-		    path:'samples/product/:tag/index.html',
-		    layout: __dirname + '/layouts/list-category.html',
-		    sortBy: 'date',
-		    reverse: true,
-		    skipMetadata: false,
-		    slug: {mode: 'rfc3986'}
-		  }))
-	)
     .use(findLayout({
         pattern: 'samples',
         layoutName: 'sample.html'
+    }))
+    .use(findProduct({
+        pattern: 'samples/emdk-for-android',
+        productName: 'EMDK For Android'
+    }))
+    .use(findProductVersion({
+        pattern: 'samples/emdk-for-android/4-0',
+        productVersionName: '4.0'
+    }))
+    .use(findProductVersion({
+        pattern: 'samples/emdk-for-android/3-1',
+        productVersionName: '3.1'
+    }))
+    .use(findProduct({
+        pattern: 'samples/emdk-for-xamarin',
+        productName: 'EMDK For Xamarin'
+    }))
+    .use(findProductVersion({
+        pattern: 'samples/emdk-for-xamarin/1-0',
+        productVersionName: '1.0'
     }))
     .use(markdown({
 	  smartypants: true,
 	  gfm: true,
 	  tables: true
 	}))
-
+    .use(snippet({
+      maxLength: 250,
+      suffix: '...'
+    }))
 	// .use(permalinks())
     // .use(templates('handlebars'))
 	.use(layouts({

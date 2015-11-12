@@ -30,5 +30,8 @@
     "metalsmith-templates": "^0.7.0",
     "multimatch": "^2.0.0",
     "npm": "^3.3.10"
+  },
+  "dependencies": {
+    "metalsmith-snippet": "^1.0.1"
   }
 }

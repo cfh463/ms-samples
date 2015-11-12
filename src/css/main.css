@@ -579,6 +579,7 @@ ul.nostyle i {
   padding: 100px 0;
 }
 #meet-team .team-member {
+  margin-bottom: 12px;
   padding: 13px;
   background: #eeeeee;
   border: 2px solid #eeeeee;
@@ -849,6 +850,8 @@ ul.nostyle i {
 #blog .blog-post.blog-media .entry-thumbnail {
   margin: -15px 15px -15px -15px;
   position: relative;
+  max-height: 200px;
+  max-width: 100px;
 }
 #blog .blog-post.blog-media .post-format {
   position: absolute;

@@ -1,5 +1,6 @@
 
 {{> header}}
+
     <section id="cta" class="wow fadeIn">
         <div class="container">
             <div class="row">
@@ -25,7 +26,7 @@
 	                    <div class="media service-box wow fadeInRight">
 	                        <div class="media-body">
 	                            <h4 class="media-heading">Product</h4>
-	                            <p>{{ product }}</p>
+	                            <p>{{ product }} - {{ productversion }}</p>
 	                        </div>
 	                    </div>
 	                    <div class="media service-box wow fadeInRight">
@@ -53,10 +54,9 @@
                 		<div class="col-sm-12">
 						    <section id="main-slider">
 						        <div class="owl-carousel">
-						        	{{log screenshots}}
 						        	{{#each screenshots}}
 						            <div class="item" >
-						            	<img src="{{ ../url }}{{ this }}"/>
+						            	<img src="{{../site.url}}/{{ ../url }}{{ this }}"/>
 						                
 						            </div><!--/.item-->
 						            {{/each}}
